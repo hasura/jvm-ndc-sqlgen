@@ -1,0 +1,36 @@
+{
+  "type":"table",
+  "table": [
+    "CHINOOK",
+    "CI_DATA",
+    "ALBUM"
+  ],
+  "table_relationships": [],
+  "query": {
+    "aggregates": {
+      "AlbumsCount": {
+        "type": "star_count"
+      }
+    }
+  },
+  "foreach": [
+    {
+      "ARTISTID": {
+        "value": 50,
+        "value_type": "Int"
+      }
+    },
+    {
+      "ARTISTID": {
+        "value": 22,
+        "value_type": "Int"
+      }
+    },
+    {
+      "ARTISTID": {
+        "value": 27,
+        "value_type": "Int"
+      }
+    }
+  ]
+}
