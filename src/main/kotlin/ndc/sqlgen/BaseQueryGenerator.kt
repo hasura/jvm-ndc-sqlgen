@@ -397,6 +397,11 @@ abstract class BaseQueryGenerator : BaseGenerator {
 
     protected fun getWhereConditions(
         request: QueryRequest,
+        overrideCollection: String
+    ): Condition = getWhereConditions(request.copy(collection = overrideCollection))
+
+    protected fun getWhereConditions(
+        request: QueryRequest,
     ): Condition {
         return DSL.and(
             if (request.collection == request.root_collection) {
