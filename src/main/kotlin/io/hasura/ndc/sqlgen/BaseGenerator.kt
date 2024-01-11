@@ -1,6 +1,6 @@
-package ndc.sqlgen
+package io.hasura.ndc.sqlgen
 
-import ndc.ir.*
+import io.hasura.ndc.ir.*
 import org.jooq.Condition
 import org.jooq.impl.DSL
 import org.jooq.Field
@@ -9,18 +9,17 @@ sealed interface BaseGenerator {
 
     fun mkSQLJoin(
         rel: Relationship,
-        sourceTableNameTransform: (String) -> String = { it },
+        sourceCollection: String,
         targetTableNameTransform: (String) -> String = { it },
     ): Condition {
-        val sourceTableFQN = sourceTableNameTransform(rel.source_collection_or_type)
         val targetTableFQN = targetTableNameTransform(rel.target_collection)
         return DSL.and(
             rel.column_mapping.map { (sourceColumn, targetColumn) ->
-                DSL.field(DSL.name(listOf(sourceTableFQN, sourceColumn)))
+                DSL.field(DSL.name(listOf(sourceCollection, sourceColumn)))
                     .eq(DSL.field(DSL.name(listOf(targetTableFQN, targetColumn))))
             }
                     + rel.arguments.map { (targetColumn, argument) ->
-                DSL.field(DSL.name(listOf(sourceTableFQN, (argument as Argument.Column).name)))
+                DSL.field(DSL.name(listOf(sourceCollection, (argument as Argument.Column).name)))
                     .eq(DSL.field(DSL.name(listOf(targetTableFQN, targetColumn))))
             }
         )
@@ -225,12 +224,12 @@ sealed interface BaseGenerator {
                     is ExistsInCollection.Unrelated -> {
                         val condition = mkSQLJoin(
                             Relationship(
-                                source_collection_or_type = request.collection,
                                 target_collection = inTable.collection,
                                 arguments = inTable.arguments,
                                 column_mapping = emptyMap(),
                                 relationship_type = RelationshipType.Array
-                            )
+                            ),
+                            request.collection
                         )
                         DSL.exists(
                             DSL

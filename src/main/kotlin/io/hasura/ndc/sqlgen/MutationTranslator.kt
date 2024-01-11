@@ -1,8 +1,6 @@
-package ndc.sqlgen
+package io.hasura.ndc.sqlgen
 
-import ndc.ir.MutationOperationResult
-import ndc.ir.MutationRequest
-import ndc.ir.QueryRequest
+import io.hasura.ndc.ir.*
 import org.jooq.DSLContext
 import org.jooq.Select
 

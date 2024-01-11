@@ -1,6 +1,7 @@
-package ndc.sqlgen
+package io.hasura.ndc.sqlgen
 
-import ndc.ir.*
+import io.hasura.ndc.ir.*
+import io.hasura.ndc.ir.Field as IRField
 import org.jooq.*
 import org.jooq.Field
 import org.jooq.impl.DSL
@@ -24,16 +25,16 @@ abstract class BaseQueryGenerator : BaseGenerator {
         throw NotImplementedError("Mutation not supported for this data source")
     }
 
-    fun getQueryColumnFields(fields: Map<String, ndc.ir.Field>): Map<String, ndc.ir.Field.ColumnField> {
+    fun getQueryColumnFields(fields: Map<String, IRField>): Map<String, IRField.ColumnField> {
         return fields
-            .filterValues { it is ndc.ir.Field.ColumnField }
-            .mapValues { it.value as ndc.ir.Field.ColumnField }
+            .filterValues { it is IRField.ColumnField }
+            .mapValues { it.value as IRField.ColumnField }
     }
 
-    fun getQueryRelationFields(fields: Map<String, ndc.ir.Field>?): Map<String, ndc.ir.Field.RelationshipField> {
+    fun getQueryRelationFields(fields: Map<String, IRField>?): Map<String, IRField.RelationshipField> {
         return fields
-            ?.filterValues { it is ndc.ir.Field.RelationshipField }
-            ?.mapValues { it.value as ndc.ir.Field.RelationshipField }
+            ?.filterValues { it is IRField.RelationshipField }
+            ?.mapValues { it.value as IRField.RelationshipField }
             ?: emptyMap()
     }
 
@@ -156,7 +157,7 @@ abstract class BaseQueryGenerator : BaseGenerator {
                         select.leftJoin(
                             DSL.table(DSL.name(rel.target_collection))
                         ).on(
-                            mkSQLJoin(rel, { request.collection })
+                            mkSQLJoin(rel, request.collection )
                         )
                         seenRelations.add(it.relationship)
                     }
@@ -197,7 +198,7 @@ abstract class BaseQueryGenerator : BaseGenerator {
     protected fun addJoinsRequiredForOrderByFields(
         select: SelectJoinStep<*>,
         request: QueryRequest,
-        sourceTableNameTransform: (String) -> String = { it }
+        sourceCollection: String = request.collection
     ) {
         // Add the JOIN's required by any ORDER BY fields referencing other tables
         //
@@ -232,7 +233,7 @@ abstract class BaseQueryGenerator : BaseGenerator {
                                     select.leftJoin(
                                         DSL.table(DSL.name(relationship.target_collection))
                                     ).on(
-                                        mkSQLJoin(relationship, sourceTableNameTransform).and(orderByWhereCondition)
+                                        mkSQLJoin(relationship, sourceCollection).and(orderByWhereCondition)
                                     )
                                 }
                                 // It's an aggregate relationship, so we need to join to the aggregation subquery
@@ -248,7 +249,7 @@ abstract class BaseQueryGenerator : BaseGenerator {
                                     ).on(
                                         mkSQLJoin(
                                             relationship,
-                                            sourceTableNameTransform,
+                                            sourceCollection,
                                             targetTableNameTransform = { _ -> "${relationshipName}_aggregate" }
                                         )
                                     )
