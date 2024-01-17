@@ -10,11 +10,9 @@ import org.jooq.impl.SQLDataType
 abstract class BaseQueryGenerator : BaseGenerator {
 
     fun handleRequest(request: QueryRequest): Select<*> {
-        return when {
-            isVariablesRequest(request) -> this.forEachQueryRequestToSQL(request)
-            // request.collection_relationships.isEmpty() -> SimpleQueryGenerator.queryRequestToSQL(request)
-            else -> this.queryRequestToSQL(request)
-        }
+        return if(isVariablesRequest(request))
+            this.forEachQueryRequestToSQL(request)
+        else this.queryRequestToSQL(request)
     }
 
     protected fun isVariablesRequest(request: QueryRequest) = !request.variables.isNullOrEmpty()
