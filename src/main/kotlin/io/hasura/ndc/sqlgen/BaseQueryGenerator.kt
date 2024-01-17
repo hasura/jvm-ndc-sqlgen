@@ -398,15 +398,12 @@ abstract class BaseQueryGenerator : BaseGenerator {
 
     protected fun getWhereConditions(
         request: QueryRequest,
-        overrideCollection: String
-    ): Condition = getWhereConditions(request.copy(collection = overrideCollection))
-
-    protected fun getWhereConditions(
-        request: QueryRequest,
+        collection: String = request.collection,
+        arguments: Map<String, Argument> = request.arguments
     ): Condition {
         return DSL.and(
-            if (request.collection == request.root_collection) {
-                request.arguments.map { argumentToCondition(request, it) }
+            if (collection == request.root_collection) {
+                arguments.map { argumentToCondition(request, it) }
             } else { listOf(DSL.noCondition()) } +
             listOf(request.query.where?.let { where ->
                 expressionToCondition(
