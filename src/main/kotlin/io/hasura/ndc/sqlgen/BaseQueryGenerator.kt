@@ -1,6 +1,7 @@
 package io.hasura.ndc.sqlgen
 
 import io.hasura.ndc.ir.*
+import io.hasura.ndc.ir.extensions.isVariablesRequest
 import io.hasura.ndc.ir.Field as IRField
 import org.jooq.*
 import org.jooq.Field
@@ -10,12 +11,10 @@ import org.jooq.impl.SQLDataType
 abstract class BaseQueryGenerator : BaseGenerator {
 
     fun handleRequest(request: QueryRequest): Select<*> {
-        return if(isVariablesRequest(request))
+        return if(request.isVariablesRequest())
             this.forEachQueryRequestToSQL(request)
         else this.queryRequestToSQL(request)
     }
-
-    protected fun isVariablesRequest(request: QueryRequest) = !request.variables.isNullOrEmpty()
 
     abstract fun queryRequestToSQL(request: QueryRequest): Select<*>
 
@@ -378,7 +377,7 @@ abstract class BaseQueryGenerator : BaseGenerator {
             .`as`(
                 request.variables!!.mapIndexed { idx, variable ->
                     val f = variable.values.map { value ->
-                        DSL.inline(value) as Param<*>
+                        DSL.inline(value)
                     }
                     DSL.select(
                         *f.toTypedArray(),
