@@ -10,14 +10,9 @@ version = "1.0.0"
 repositories {
     mavenCentral()
     mavenLocal()
-    maven("${project.rootProject.projectDir.absolutePath}/lib/m2repo")
     maven {
         name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/hasura/jvm-ndc-ir")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("GH_USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("GH_TOKEN")
-        }
+        url = uri("https://public:\u0067hp_dLUceJ8t9rzLICCKprHCLSDccthcfW3eqUGY@maven.pkg.github.com/hasura/jvm-ndc-ir")
     }
 }
 
@@ -28,7 +23,7 @@ dependencies {
     api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
     api("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 
-    implementation("com.google.guava:guava:31.1-jre") {
+    implementation("com.google.guava:guava:33.0.0-jre") {
         because("Used in QueryRequestRelationGraph to create a graph of table relations")
     }
 
