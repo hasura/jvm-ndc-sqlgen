@@ -1,0 +1,166 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.hasura",
+    "module": "ndc-sqlgen",
+    "version": "2.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.hasura",
+          "module": "ndc-ir",
+          "version": {
+            "requires": "2.0.1"
+          }
+        },
+        {
+          "group": "org.jooq",
+          "module": "jooq",
+          "version": {
+            "requires": "3.18.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.datatype",
+          "module": "jackson-datatype-jsr310",
+          "version": {
+            "requires": "2.15.2"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.15.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-script-runtime",
+          "version": {
+            "requires": "1.8.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ndc-sqlgen-2.0.1.jar",
+          "url": "ndc-sqlgen-2.0.1.jar",
+          "size": 33171,
+          "sha512": "d28dc29b3e456ba29de6d06acd3b8d3b8be1d20ac839ec8fc002044529b1feccc6f9dabd0c34cae88dcaba150faa14357f648f9f97de8ce0f5b8894aa01a805b",
+          "sha256": "10975a6997507a3e79421aee6bb2f5feb7218f944d51dc6fbc54f446f286cc13",
+          "sha1": "e287c71676e59a80a8b951f5a124599d31653032",
+          "md5": "d264ad4c76eb8937fdbd850e9d6686af"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.guava",
+          "module": "guava",
+          "version": {
+            "requires": "33.0.0-jre"
+          },
+          "reason": "Used in QueryRequestRelationGraph to create a graph of table relations"
+        },
+        {
+          "group": "io.hasura",
+          "module": "ndc-ir",
+          "version": {
+            "requires": "2.0.1"
+          }
+        },
+        {
+          "group": "org.jooq",
+          "module": "jooq",
+          "version": {
+            "requires": "3.18.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.datatype",
+          "module": "jackson-datatype-jsr310",
+          "version": {
+            "requires": "2.15.2"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin",
+          "version": {
+            "requires": "2.15.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-script-runtime",
+          "version": {
+            "requires": "1.8.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ndc-sqlgen-2.0.1.jar",
+          "url": "ndc-sqlgen-2.0.1.jar",
+          "size": 33171,
+          "sha512": "d28dc29b3e456ba29de6d06acd3b8d3b8be1d20ac839ec8fc002044529b1feccc6f9dabd0c34cae88dcaba150faa14357f648f9f97de8ce0f5b8894aa01a805b",
+          "sha256": "10975a6997507a3e79421aee6bb2f5feb7218f944d51dc6fbc54f446f286cc13",
+          "sha1": "e287c71676e59a80a8b951f5a124599d31653032",
+          "md5": "d264ad4c76eb8937fdbd850e9d6686af"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "ndc-sqlgen-2.0.1-sources.jar",
+          "url": "ndc-sqlgen-2.0.1-sources.jar",
+          "size": 7787,
+          "sha512": "59b10791dfed38aae23d33390baeb10fff147f6dbe250b291585bdd766d38cc681bc30552fb0669dc5d9add64807eb3abe2367e0a59478cf3f6ebeca71d2441e",
+          "sha256": "db1f712993d7219e656ffd5df57625a958a6f5aa2d726fd25090a5be68a6ee5f",
+          "sha1": "f74bfd22a9d489252fcc534f3bae724247a452a5",
+          "md5": "6f490d132db8c6edc3100b3be91b462a"
+        }
+      ]
+    }
+  ]
+}
