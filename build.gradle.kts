@@ -4,20 +4,19 @@ plugins {
 }
 
 group = "io.hasura"
-version = "1.0.0"
+version = "2.0.1"
 
 
 repositories {
     mavenCentral()
     mavenLocal()
     maven {
-        name = "GitHubPackages"
-        url = uri("https://public:\u0067hp_dLUceJ8t9rzLICCKprHCLSDccthcfW3eqUGY@maven.pkg.github.com/hasura/jvm-ndc-ir")
+        url = uri("https://raw.githubusercontent.com/hasura/jvm-ndc-ir/m2repo")
     }
 }
 
 dependencies {
-    api("io.hasura:ndc-ir:1.0.0")
+    api("io.hasura:ndc-ir:2.0.1")
     api("org.jooq:jooq:3.18.3")
 
     api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
